@@ -74,13 +74,13 @@ def set_internal_time(utc_time):
     year = time.localtime(utc_time)[0]  # Get current year
     
     # Time of March change to DST
-    HHMarch   = time.mktime((year,3 ,(14-(int(1+year/5+4))%7),2,0,0,0,0,0))
+    HHMarch   = time.mktime((year, 3, (14 - (1 + year * 5 // 4) % 7), 2, 0, 0, 0, 0, 0))
     # Time of October change to EST
-    HHOctober = time.mktime((year,11,(07-(int(1+year/5+4))%7),2,0,0,0,0,0))
+    HHOctober = time.mktime((year, 11,(7 - (1 + year * 5 // 4) % 7), 2, 0, 0, 0, 0, 0))
 
-    if utc_time < HHMarch :             # Are we before 2nd Sunday of March
+    if utc_time < HHMarch:              # Are we before 2nd Sunday of March
         local_time=utc_time-5*3600      # EST: UTC-5H
-    elif utc_time < HHOctober :         # Are we before last Sunday of October
+    elif utc_time < HHOctober:          # Are we before last Sunday of October
         local_time=utc_time-4*3600      # DST: UTC-4H
     else:                               # We are after last Sunday of October
         local_time=utc_time-5*3600      # EST: UTC-5H    
